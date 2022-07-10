@@ -1,0 +1,23 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+body {
+	font-family: 'Pretendard', sans-serif;
+	padding: 0;
+	margin: 0;
+}
+
+.normal {
+	font-weight: 400
+}
+
+.bold {
+	font-weight: 700
+}
+
+.bolder {
+	font-weight: 800
+}
+
+.light {
+	font-weight: 300
+}
