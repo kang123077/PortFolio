@@ -1,16 +1,43 @@
 import styled from "styled-components";
+import { useEffect, useRef, useState } from "react";
+import { useRecoilState } from "recoil";
 import ProfileContent from "../component/ProfileContent";
 import ProficiencyContent from "../component/ProficiencyContent";
 import ProjectContent from "../component/ProjectContent";
 import ExperienceContent from "../component/ExperienceContent";
+import RefsAtom from "../recolis/RefsAtom";
 
 const Index = () => {
+  const [refState, setRefState] = useRecoilState(RefsAtom);
+
+  const profileRef = useRef<HTMLElement>(null);
+  const proficiencyRef = useRef<HTMLElement>(null);
+  const projectRef = useRef<HTMLElement>(null);
+  const experienceRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    setRefState({
+        profileref: profileRef,
+        experienceref: experienceRef,
+        proficiencyref: proficiencyRef,
+        projectref: projectRef,
+    })
+  }, [profileRef, proficiencyRef, projectRef, experienceRef])
+
   return (
     <MainWrapper>
-      <ProfileContent />
-      <ProficiencyContent />
-      <ProjectContent />
-      <ExperienceContent />
+      <section ref={profileRef}>
+        <ProfileContent />
+      </section>
+      <section ref={proficiencyRef}>
+        <ProficiencyContent />
+      </section>
+      <section ref={projectRef}>
+        <ProjectContent />
+      </section>
+      <section ref={experienceRef}>
+        <ExperienceContent />
+      </section>
     </MainWrapper>
   );
 };
