@@ -1,22 +1,44 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import RefsAtom from "../recolis/RefsAtom";
+
+interface refType {
+  refs: React.RefObject<HTMLElement>;
+}
 
 const Header = () => {
+  const [refState, setRefState] = useRecoilState(RefsAtom);
+
   const { push } = useRouter();
+
+  const scrollProfile = () => {
+    refState.profileref.current.scrollIntoView({ behavior: "smooth" });
+  };
+  const scrollProficiency = () => {
+    refState.proficiencyref.current.scrollIntoView({ behavior: "smooth" });
+  };
+  const scrollexperience = () => {
+    refState.experienceref.current.scrollIntoView({ behavior: "smooth" });
+  };
+  const scrollProject = () => {
+    refState.projectref.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <HeaderWrapper>
       <TitleWrapper onClick={() => push("/")}>
         &lt; Dinasour Man / &gt;
       </TitleWrapper>
       <MenuWrapper>
-        <MenuButtonWrapper onClick={() => push("")}>Profile</MenuButtonWrapper>
-        <MenuButtonWrapper onClick={() => push("")}>
+        <MenuButtonWrapper onClick={scrollProfile}>Profile</MenuButtonWrapper>
+        <MenuButtonWrapper onClick={scrollProficiency}>
           Proficiency
         </MenuButtonWrapper>
-        <MenuButtonWrapper onClick={() => push("")}>
+        <MenuButtonWrapper onClick={scrollProject}>Project</MenuButtonWrapper>{" "}
+        <MenuButtonWrapper onClick={scrollexperience}>
           Experiences
         </MenuButtonWrapper>
-        <MenuButtonWrapper onClick={() => push("")}>Project</MenuButtonWrapper>
       </MenuWrapper>
     </HeaderWrapper>
   );

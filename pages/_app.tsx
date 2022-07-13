@@ -1,13 +1,16 @@
 import "../styles/global.css";
 import HeaderContent from "../component/HeaderContent";
 import FooterContent from "../component/FooterContent";
+import { RecoilRoot } from "recoil";
 
 function App({ Component, pageProps }) {
   return (
     <>
-      <HeaderContent />
-      <Component {...pageProps} />
-      <FooterContent />
+      <RecoilRoot>
+        <HeaderContent />
+        <Component {...pageProps} />
+        <FooterContent />
+      </RecoilRoot>
     </>
   );
 }
