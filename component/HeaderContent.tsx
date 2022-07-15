@@ -27,15 +27,15 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <TitleWrapper onClick={() => push("/")}>
-        &lt; Dinasour Man / &gt;
+      <TitleWrapper onClick={() => push(`/`)}>
+        {`<`} Dinasour Man / {`>`}
       </TitleWrapper>
       <MenuWrapper>
         <MenuButtonWrapper onClick={scrollProfile}>Profile</MenuButtonWrapper>
         <MenuButtonWrapper onClick={scrollProficiency}>
           Proficiency
         </MenuButtonWrapper>
-        <MenuButtonWrapper onClick={scrollProject}>Project</MenuButtonWrapper>{" "}
+        <MenuButtonWrapper onClick={scrollProject}>Project</MenuButtonWrapper>
         <MenuButtonWrapper onClick={scrollexperience}>
           Experiences
         </MenuButtonWrapper>
@@ -50,8 +50,15 @@ const HeaderWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
+  position: fixed;
+  transition: transform 1s;
+  transform: initial;
+  background-color: white;
+  z-index: 1000;
+`;
+HeaderWrapper.scrollDown = styled.div`
+  transform: translate(0, -80px);
 `;
 
 const TitleWrapper = styled.a`
