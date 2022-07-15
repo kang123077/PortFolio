@@ -6,7 +6,7 @@ const ProfileContent = () => {
   return (
     <ProfileWrapper>
       <ProfileThumbWrapper>
-        <Image src={MJphoto} width={200} height={150} />
+        <Image src={MJphoto} width={200} height={150} z-index={1} />
         Profile
       </ProfileThumbWrapper>
     </ProfileWrapper>
@@ -19,7 +19,7 @@ const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin: 30px 0px 30px 6vw;
+  margin: 80px 0px 30px 6vw;
   height: 600px;
 `;
 
