@@ -47,5 +47,5 @@ export default Index;
 const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 `;

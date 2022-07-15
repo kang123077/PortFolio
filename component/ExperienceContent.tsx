@@ -19,7 +19,7 @@ const ExperienceWrapper = styled.div`
 `;
 
 const ExperienceTitleWrapper = styled.p`
-  font-family: "Bebas";
+  font-family: "Bebas Neue", cursive;
   font-style: normal;
   font-weight: 400;
   font-size: 42px;

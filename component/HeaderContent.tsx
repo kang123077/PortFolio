@@ -2,13 +2,35 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import RefsAtom from "../recolis/RefsAtom";
-
-interface refType {
-  refs: React.RefObject<HTMLElement>;
-}
+import { useCallback, useState, useLayoutEffect, useEffect, useRef } from "react";
+import { useThrottle, useDebounce } from "../utils/functions";
 
 const Header = () => {
+  const [scrollCheck, setScrollCheck] = useState<boolean>(false);
+  const layoutRef = useRef<HTMLElement>(null);
+  const [prevY, setPrevY] = useState<number>(layoutRef.current.scrollTop);
   const [refState, setRefState] = useRecoilState(RefsAtom);
+
+  const handleScroll = useCallback((e) => {
+    const diff = e.target.scrollTop - prevY
+    if (diff > 0) {
+      setIsHeaderShow(false)
+    } else if (diff < 0) {
+      setIsHeaderShow(true)
+    }
+    setPrevY(e.target.scrollTop)
+  }, [prevY]);
+
+  const stopScroll = useCallback((e) => {
+    if (e.target.scrollTop === 0) {
+      setIsHeaderShow(true)
+    } else {
+      setIsHeaderShow(false)
+    }
+  }, []);
+
+  const throttleScroll = useThrottle({func : handleScroll, wait : 300});
+  const debounceScroll = useDebounce(stopScroll, 1500);
 
   const { push } = useRouter();
 
@@ -26,21 +48,23 @@ const Header = () => {
   };
 
   return (
-    <HeaderWrapper>
-      <TitleWrapper onClick={() => push(`/`)}>
-        {`<`} Dinasour Man / {`>`}
-      </TitleWrapper>
-      <MenuWrapper>
-        <MenuButtonWrapper onClick={scrollProfile}>Profile</MenuButtonWrapper>
-        <MenuButtonWrapper onClick={scrollProficiency}>
-          Proficiency
-        </MenuButtonWrapper>
-        <MenuButtonWrapper onClick={scrollProject}>Project</MenuButtonWrapper>
-        <MenuButtonWrapper onClick={scrollexperience}>
-          Experiences
-        </MenuButtonWrapper>
-      </MenuWrapper>
-    </HeaderWrapper>
+    <section ref={layoutRef}>
+      <HeaderWrapper>
+        <TitleWrapper onClick={() => push(`/`)}>
+          {`<`} Dinasour Man / {`>`}
+        </TitleWrapper>
+        <MenuWrapper>
+          <MenuButtonWrapper onClick={scrollProfile}>Profile</MenuButtonWrapper>
+          <MenuButtonWrapper onClick={scrollProficiency}>
+            Proficiency
+          </MenuButtonWrapper>
+          <MenuButtonWrapper onClick={scrollProject}>Project</MenuButtonWrapper>
+          <MenuButtonWrapper onClick={scrollexperience}>
+            Experiences
+          </MenuButtonWrapper>
+        </MenuWrapper>
+      </HeaderWrapper>
+    </section>
   );
 };
 

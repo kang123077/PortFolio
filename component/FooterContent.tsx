@@ -19,7 +19,7 @@ const FooterTextWrapper = styled.div`
   text-align: center;
   width: 100%;
   height: 100px;
-  font-family: "Bebas";
+  font-family: "Bebas Neue", cursive;
   font-style: normal;
   font-weight: 400;
   font-size: 42px;
