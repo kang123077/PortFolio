@@ -21,6 +21,7 @@ const ProfileWrapper = styled.div`
   align-items: flex-start;
   margin: 80px 0px 30px 6vw;
   height: 600px;
+  width: 90vw;
 `;
 
 const ProfileThumbWrapper = styled.div`
