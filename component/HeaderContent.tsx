@@ -77,8 +77,7 @@ const HeaderWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   position: fixed;
-  transition: transform 1s;
-  transform: initial;
+  transition: 0.4s ease-out;
   background-color: white;
   z-index: 1000;
   &.hide {
