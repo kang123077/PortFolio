@@ -2,37 +2,40 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import RefsAtom from "../recolis/RefsAtom";
-import { useCallback, useState, useLayoutEffect, useEffect, useRef } from "react";
-import { useThrottle, useDebounce } from "../utils/functions";
+import { useState, useEffect } from "react";
+
+const throttle = function (callback, waitTime) {
+  let timerId = null;
+  return (e) => {
+    if (timerId) return;
+    timerId = setTimeout(() => {
+      callback.call(this, e);
+      timerId = null;
+    }, waitTime);
+  };
+};
 
 const Header = () => {
-  const [scrollCheck, setScrollCheck] = useState<boolean>(false);
-  const layoutRef = useRef<HTMLElement>(null);
-  const [prevY, setPrevY] = useState<number>(layoutRef.current.scrollTop);
   const [refState, setRefState] = useRecoilState(RefsAtom);
-
-  const handleScroll = useCallback((e) => {
-    const diff = e.target.scrollTop - prevY
-    if (diff > 0) {
-      setIsHeaderShow(false)
-    } else if (diff < 0) {
-      setIsHeaderShow(true)
-    }
-    setPrevY(e.target.scrollTop)
-  }, [prevY]);
-
-  const stopScroll = useCallback((e) => {
-    if (e.target.scrollTop === 0) {
-      setIsHeaderShow(true)
-    } else {
-      setIsHeaderShow(false)
-    }
-  }, []);
-
-  const throttleScroll = useThrottle({func : handleScroll, wait : 300});
-  const debounceScroll = useDebounce(stopScroll, 1500);
-
   const { push } = useRouter();
+
+  const [hide, setHide] = useState<boolean>(false);
+  const [pageY, setPageY] = useState<number>(0);
+
+  const handleScroll = () => {
+    const { pageYOffset } = window;
+    const deltaY = pageYOffset - pageY;
+    const hide = pageYOffset !== 0 && deltaY >= 0;
+    setHide(hide);
+    setPageY(pageYOffset);
+  };
+
+  const throttleScroll = throttle(handleScroll, 300);
+
+  useEffect(() => {
+    window.addEventListener("scroll", throttleScroll);
+    return () => window.removeEventListener("scroll", throttleScroll);
+  }, [pageY]);
 
   const scrollProfile = () => {
     refState.profileref.current.scrollIntoView({ behavior: "smooth" });
@@ -48,23 +51,21 @@ const Header = () => {
   };
 
   return (
-    <section ref={layoutRef}>
-      <HeaderWrapper>
-        <TitleWrapper onClick={() => push(`/`)}>
-          {`<`} Dinasour Man / {`>`}
-        </TitleWrapper>
-        <MenuWrapper>
-          <MenuButtonWrapper onClick={scrollProfile}>Profile</MenuButtonWrapper>
-          <MenuButtonWrapper onClick={scrollProficiency}>
-            Proficiency
-          </MenuButtonWrapper>
-          <MenuButtonWrapper onClick={scrollProject}>Project</MenuButtonWrapper>
-          <MenuButtonWrapper onClick={scrollexperience}>
-            Experiences
-          </MenuButtonWrapper>
-        </MenuWrapper>
-      </HeaderWrapper>
-    </section>
+    <HeaderWrapper className={hide && "hide"}>
+      <TitleWrapper onClick={() => push(`/`)}>
+        {`<`} Dinasour Man / {`>`}
+      </TitleWrapper>
+      <MenuWrapper>
+        <MenuButtonWrapper onClick={scrollProfile}>Profile</MenuButtonWrapper>
+        <MenuButtonWrapper onClick={scrollProficiency}>
+          Proficiency
+        </MenuButtonWrapper>
+        <MenuButtonWrapper onClick={scrollProject}>Project</MenuButtonWrapper>
+        <MenuButtonWrapper onClick={scrollexperience}>
+          Experiences
+        </MenuButtonWrapper>
+      </MenuWrapper>
+    </HeaderWrapper>
   );
 };
 
@@ -80,9 +81,9 @@ const HeaderWrapper = styled.div`
   transform: initial;
   background-color: white;
   z-index: 1000;
-`;
-HeaderWrapper.scrollDown = styled.div`
-  transform: translate(0, -80px);
+  &.hide {
+    transform: translateY(-80px);
+  }
 `;
 
 const TitleWrapper = styled.a`

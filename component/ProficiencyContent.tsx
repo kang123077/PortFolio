@@ -16,6 +16,7 @@ const ProficiencyWrapper = styled.div`
   align-items: flex-start;
   margin: 30px 0px 30px 6vw;
   height: 600px;
+  width: 90vw;
 `;
 
 const ProficiencyTitleWrapper = styled.p`
