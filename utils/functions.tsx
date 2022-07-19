@@ -47,7 +47,7 @@ export const useDebounce = (func, wait) => {
   }
 }
 
-export const useThrottle = ({func, wait}) => {
+export const useThrottle = (func, wait) => {
   const [id, setId] = useState(null)
   const [previous, setPrevious] = useState(Date.now())
   const remaining = useRef(wait)
