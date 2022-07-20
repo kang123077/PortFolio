@@ -37,6 +37,17 @@ const Header = () => {
     return () => window.removeEventListener("scroll", throttleScroll);
   }, [pageY]);
 
+  const scrollProfile = () => {
+    refState.profileref.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const throttleScroll = throttle(handleScroll, 300);
+
+  useEffect(() => {
+    window.addEventListener("scroll", throttleScroll);
+    return () => window.removeEventListener("scroll", throttleScroll);
+  }, [pageY]);
+
   const scrollProfile = useCallback(() => {
     refState.profileref.current.scrollIntoView({ behavior: "smooth" });
   }, [refState]);
