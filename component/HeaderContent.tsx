@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import RefsAtom from "../recolis/RefsAtom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-const throttle = function (callback, waitTime) {
+const throttle = (callback, waitTime) => {
   let timerId = null;
   return (e) => {
     if (timerId) return;
@@ -40,15 +40,26 @@ const Header = () => {
   const scrollProfile = () => {
     refState.profileref.current.scrollIntoView({ behavior: "smooth" });
   };
-  const scrollProficiency = () => {
+
+  const throttleScroll = throttle(handleScroll, 300);
+
+  useEffect(() => {
+    window.addEventListener("scroll", throttleScroll);
+    return () => window.removeEventListener("scroll", throttleScroll);
+  }, [pageY]);
+
+  const scrollProfile = useCallback(() => {
+    refState.profileref.current.scrollIntoView({ behavior: "smooth" });
+  }, [refState]);
+  const scrollProficiency = useCallback(() => {
     refState.proficiencyref.current.scrollIntoView({ behavior: "smooth" });
-  };
-  const scrollexperience = () => {
+  }, [refState]);
+  const scrollexperience = useCallback(() => {
     refState.experienceref.current.scrollIntoView({ behavior: "smooth" });
-  };
-  const scrollProject = () => {
+  }, [refState]);
+  const scrollProject = useCallback(() => {
     refState.projectref.current.scrollIntoView({ behavior: "smooth" });
-  };
+  }, [refState]);
 
   return (
     <HeaderWrapper className={hide && "hide"}>

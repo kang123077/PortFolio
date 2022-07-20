@@ -17,10 +17,8 @@ export const functionCalculator = ({ num1, type, num2 }) => {
 };
 
 export const fucntionFibonacci = (n: number) => {
-  if (n < 0)
-    return "error!";
-  if (n > 32)
-    return "too high";
+  if (n < 0) return "error!";
+  if (n > 32) return "too high";
   if (n <= 1) {
     return n;
   }
@@ -28,49 +26,49 @@ export const fucntionFibonacci = (n: number) => {
 };
 
 export const useDebounce = (func, wait) => {
-  const [id, setId] = useState(null)
+  const [id, setId] = useState(null);
   useEffect(() => {
     return () => {
-      clearTimeout(id)
-    }
-  }, [id])
+      clearTimeout(id);
+    };
+  }, [id]);
   return (...args) => {
     if (id) {
-      clearTimeout(id)
+      clearTimeout(id);
     }
     setId(
       setTimeout(() => {
-        setId(null)
-        func(...args)
+        setId(null);
+        func(...args);
       }, wait)
-    )
-  }
-}
+    );
+  };
+};
 
 export const useThrottle = (func, wait) => {
-  const [id, setId] = useState(null)
-  const [previous, setPrevious] = useState(Date.now())
-  const remaining = useRef(wait)
-  let now = previous
-  let diff = 0
+  const [id, setId] = useState(null);
+  const [previous, setPrevious] = useState(Date.now());
+  const remaining = useRef(wait);
+  let now = previous;
+  let diff = 0;
   useEffect(() => {
     return () => {
-      clearTimeout(id)
-      now = Date.now()
-      diff = wait - (now - previous)
-      remaining.current = diff < wait && diff > 0 ? diff : 0
-    }
-  }, [id, previous])
+      clearTimeout(id);
+      now = Date.now();
+      diff = wait - (now - previous);
+      remaining.current = diff < wait && diff > 0 ? diff : 0;
+    };
+  }, [id, previous]);
   return (...args) => {
     if (remaining.current <= 0) {
-      func(...args)
-      setPrevious(Date.now())
+      func(...args);
+      setPrevious(Date.now());
     } else {
       setId(
         setTimeout(() => {
-          func(...args)
+          func(...args);
         }, remaining.current)
-      )
+      );
     }
-  }
-}
+  };
+};
