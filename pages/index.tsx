@@ -19,9 +19,9 @@ const Index = () => {
   useEffect(() => {
     setRefState({
       profileref: profileRef,
-      experienceref: experienceRef,
       proficiencyref: proficiencyRef,
       projectref: projectRef,
+      experienceref: experienceRef,
     });
   }, [profileRef, proficiencyRef, projectRef, experienceRef]);
 

@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import RefsAtom from "../recolis/RefsAtom";
 import { useState, useEffect, useCallback } from "react";
 
-const throttle = function (callback, waitTime) {
+const throttle = (callback, waitTime) => {
   let timerId = null;
   return (e) => {
     if (timerId) return;
@@ -37,18 +37,18 @@ const Header = () => {
     return () => window.removeEventListener("scroll", throttleScroll);
   }, [pageY]);
 
-  const scrollProfile = useCallback(() => {
+  const scrollProfile = () => {
     refState.profileref.current.scrollIntoView({ behavior: "smooth" });
-  }, []);
-  const scrollProficiency = useCallback(() => {
+  };
+  const scrollProficiency = () => {
     refState.proficiencyref.current.scrollIntoView({ behavior: "smooth" });
-  }, []);
-  const scrollexperience = useCallback(() => {
+  };
+  const scrollexperience = () => {
     refState.experienceref.current.scrollIntoView({ behavior: "smooth" });
-  }, []);
-  const scrollProject = useCallback (() => {
+  };
+  const scrollProject = () => {
     refState.projectref.current.scrollIntoView({ behavior: "smooth" });
-  }, []);
+  };
 
   return (
     <HeaderWrapper className={hide && "hide"}>
