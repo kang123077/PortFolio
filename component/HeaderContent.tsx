@@ -37,18 +37,18 @@ const Header = () => {
     return () => window.removeEventListener("scroll", throttleScroll);
   }, [pageY]);
 
-  const scrollProfile = () => {
+  const scrollProfile = useCallback(() => {
     refState.profileref.current.scrollIntoView({ behavior: "smooth" });
-  };
-  const scrollProficiency = () => {
+  }, [refState]);
+  const scrollProficiency = useCallback(() => {
     refState.proficiencyref.current.scrollIntoView({ behavior: "smooth" });
-  };
-  const scrollexperience = () => {
+  }, [refState]);
+  const scrollexperience = useCallback(() => {
     refState.experienceref.current.scrollIntoView({ behavior: "smooth" });
-  };
-  const scrollProject = () => {
+  }, [refState]);
+  const scrollProject = useCallback(() => {
     refState.projectref.current.scrollIntoView({ behavior: "smooth" });
-  };
+  }, [refState]);
 
   return (
     <HeaderWrapper className={hide && "hide"}>
