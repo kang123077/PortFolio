@@ -6,6 +6,7 @@ import ProficiencyContent from "../component/ProficiencyContent";
 import ProjectContent from "../component/ProjectContent";
 import ExperienceContent from "../component/ExperienceContent";
 import RefsAtom from "../recolis/RefsAtom";
+import MainSectionContent from "../component/MainSectionContent";
 
 const Index = () => {
   const [refState, setRefState] = useRecoilState(RefsAtom);
@@ -17,26 +18,26 @@ const Index = () => {
 
   useEffect(() => {
     setRefState({
-        profileref: profileRef,
-        experienceref: experienceRef,
-        proficiencyref: proficiencyRef,
-        projectref: projectRef,
-    })
-  }, [profileRef, proficiencyRef, projectRef, experienceRef])
+      profileref: profileRef,
+      experienceref: experienceRef,
+      proficiencyref: proficiencyRef,
+      projectref: projectRef,
+    });
+  }, [profileRef, proficiencyRef, projectRef, experienceRef]);
 
   return (
     <MainWrapper>
       <section ref={profileRef}>
-        <ProfileContent />
+        <MainSectionContent title="Profile" />
       </section>
       <section ref={proficiencyRef}>
-        <ProficiencyContent />
+        <MainSectionContent title="Proficiency" />
       </section>
       <section ref={projectRef}>
-        <ProjectContent />
+        <MainSectionContent title="Project" />
       </section>
       <section ref={experienceRef}>
-        <ExperienceContent />
+        <MainSectionContent title="Experience" />
       </section>
     </MainWrapper>
   );

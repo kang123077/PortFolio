@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import RefsAtom from "../recolis/RefsAtom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const throttle = function (callback, waitTime) {
   let timerId = null;
@@ -37,18 +37,18 @@ const Header = () => {
     return () => window.removeEventListener("scroll", throttleScroll);
   }, [pageY]);
 
-  const scrollProfile = () => {
+  const scrollProfile = useCallback(() => {
     refState.profileref.current.scrollIntoView({ behavior: "smooth" });
-  };
-  const scrollProficiency = () => {
+  }, []);
+  const scrollProficiency = useCallback(() => {
     refState.proficiencyref.current.scrollIntoView({ behavior: "smooth" });
-  };
-  const scrollexperience = () => {
+  }, []);
+  const scrollexperience = useCallback(() => {
     refState.experienceref.current.scrollIntoView({ behavior: "smooth" });
-  };
-  const scrollProject = () => {
+  }, []);
+  const scrollProject = useCallback (() => {
     refState.projectref.current.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   return (
     <HeaderWrapper className={hide && "hide"}>
