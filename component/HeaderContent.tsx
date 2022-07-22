@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import RefsAtom from "../recolis/RefsAtom";
 import { useState, useEffect, useCallback } from "react";
+import ModalVisibility from "../recolis/modalvisibility";
 
 const throttle = (callback, waitTime) => {
   let timerId = null;
@@ -16,6 +17,7 @@ const throttle = (callback, waitTime) => {
 };
 
 const Header = () => {
+  const [modalState, setModalState] = useRecoilState(ModalVisibility);
   const [refState, setRefState] = useRecoilState(RefsAtom);
   const { push } = useRouter();
 
@@ -30,18 +32,24 @@ const Header = () => {
     setPageY(pageYOffset);
   };
 
+  const closeModal = () => {
+    setModalState({
+      type: "none",
+      children: null,
+    });
+  };
+
+  const titleOnclick = () => {
+    push(`/`);
+    closeModal();
+  };
+
   const throttleScroll = throttle(handleScroll, 300);
 
   useEffect(() => {
     window.addEventListener("scroll", throttleScroll);
     return () => window.removeEventListener("scroll", throttleScroll);
   }, [pageY]);
-
-  const scrollProfile = () => {
-    refState.profileref.current.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const throttleScroll = throttle(handleScroll, 300);
 
   useEffect(() => {
     window.addEventListener("scroll", throttleScroll);
@@ -63,7 +71,7 @@ const Header = () => {
 
   return (
     <HeaderWrapper className={hide && "hide"}>
-      <TitleWrapper onClick={() => push(`/`)}>
+      <TitleWrapper onClick={titleOnclick}>
         {`<`} Dinasour Man / {`>`}
       </TitleWrapper>
       <MenuWrapper>
