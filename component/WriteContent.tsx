@@ -8,13 +8,11 @@ const WriteContent = (props) => {
   const { back } = useRouter();
 
   const [inputs, setInputs] = useState({
-    nickName: "ㅇㅇ",
     title: "",
-    password: "",
     content: "",
   });
 
-  const { nickName, title, password, content } = inputs;
+  const { title, content } = inputs;
 
   const onChangeValue = (e) => {
     setInputs({
@@ -60,6 +58,10 @@ const WriteContent = (props) => {
           {props.content}
         </RightContentInput>
       </Right>
+      <FixedButtonWrapper>
+        <FixedButton onClick={openModal}>확인</FixedButton>
+        <FixedButton onClick={() => back()}>취소</FixedButton>
+      </FixedButtonWrapper>
     </ItemWrapper>
   );
 };
@@ -139,6 +141,7 @@ const FixedButtonWrapper = styled.div`
   flex-direction: column;
   right: 20px;
   bottom: 20px;
+  z-index: 998;
 `;
 
 const FixedButton = styled.button`
