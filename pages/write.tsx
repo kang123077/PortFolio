@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import WriteContent from "../component/WriteContent";
 import ModalVisibility from "../recolis/modalvisibility";
 
 const write = () => {
@@ -16,7 +17,17 @@ const write = () => {
     openModal();
   }, []);
 
-  return <div></div>;
+  return (
+    <WriteWrapper>
+      <WriteContent></WriteContent>
+    </WriteWrapper>
+  );
 };
 
 export default write;
+
+const WriteWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
