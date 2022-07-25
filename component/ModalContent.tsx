@@ -82,7 +82,7 @@ const Modal = () => {
           <ModalOverlay />
           <ModalWrapper tabIndex="-1">
             <ModalInner tabIndex="0" className="modal-inner">
-              {modalState.children ?? <p>children없음</p>}
+              <ModalP>{modalState.children ?? <p>children없음</p>}</ModalP>
               <ModalPasswordInput
                 name="modalPassword"
                 type="password"
@@ -142,6 +142,13 @@ const ModalInner = styled.div`
   border: 1px solid #9381dd;
   box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.35);
   border-radius: 8px;
+  text-align: center;
+  font-size: 18px;
+`;
+
+const ModalP = styled.p`
+  width: 40vw;
+  margin: 0 auto;
   text-align: center;
   font-size: 18px;
 `;
